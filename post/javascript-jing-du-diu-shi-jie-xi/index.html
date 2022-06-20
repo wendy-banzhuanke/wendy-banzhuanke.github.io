@@ -1,0 +1,294 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JavaScript精度丢失解析 | Wendy</title>
+<link rel="shortcut icon" href="https://wendy-banzhuanke.github.io//favicon.ico?v=1655705991228">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://wendy-banzhuanke.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="JavaScript精度丢失解析 | Wendy - Atom Feed" href="https://wendy-banzhuanke.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="对于一个整数来说，进行十进制与二进制之间的转换很方便，但对于浮点数来说不方便——因为小数点的存在。对于浮点数来说，小数点的位置不是固定的（小数点前后数字个数都不固定）。后来大神们想出用科学计数法的方式（1.01 * 2E4）来表示浮点数，这..." />
+    <meta name="keywords" content="JavaScript" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://wendy-banzhuanke.github.io/">
+  <img class="avatar" src="https://wendy-banzhuanke.github.io//images/avatar.png?v=1655705991228" alt="">
+  </a>
+  <h1 class="site-title">
+    Wendy
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/like" class="menu">
+          随行
+        </a>
+      
+    
+      
+        <a href="/add" class="menu">
+          积累
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/wendy-banzhuanke" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              JavaScript精度丢失解析
+            </h2>
+            <div class="post-info">
+              <span>
+                2018.06.20
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://wendy-banzhuanke.github.io/tag/WSVqbRT0N/" class="post-tag">
+                  # JavaScript
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>对于一个整数来说，进行十进制与二进制之间的转换很方便，但对于浮点数来说不方便——<strong>因为小数点的存在</strong>。对于浮点数来说，小数点的位置不是固定的（小数点前后数字个数都不固定）。后来大神们想出用科学计数法的方式（1.01 * 2E4）来表示浮点数，这样的好处是：<strong>小数点位置固定下来了</strong></p>
+<!-- more -->
+<h3 id="前言">前言</h3>
+<p>看这篇文章之前，你需要了解一下的知识</p>
+<ul>
+<li>进制之间的转换</li>
+<li>科学计数法中的E</li>
+<li>浮点型的存储机制（单精度浮点数，双精度浮点数）</li>
+</ul>
+<h3 id="引导">引导</h3>
+<p>大家都学过数学「无理数」的概念，即无限循环小数，比如常见的π（3.1415926...），再比如1÷3=1.33333...；</p>
+<p>计算机没有办法存储一个无限循环小数，只能存储它的近似值；</p>
+<p>计算机在计算时是将十进制转成二进制后进行计算并存储；</p>
+<h3 id="进制转换">进制转换</h3>
+<p>以下为常用的进制转换，n进制 逢n进一</p>
+<h5 id="二进制">二进制</h5>
+<p>由两个数字 0、1组成</p>
+<p>逢2进1</p>
+<h5 id="八进制">八进制</h5>
+<p>由八个数字 0、1、2、3、4、5、6、7组成</p>
+<p>逢8进1</p>
+<h5 id="十进制">十进制</h5>
+<blockquote>
+<p>日常中常用</p>
+</blockquote>
+<p>由十个数字0、1、2、3、4、5、6、7、8、9组成</p>
+<p>逢10进1</p>
+<h5 id="十六进制">十六进制</h5>
+<blockquote>
+<p>半斤八两的由来</p>
+</blockquote>
+<p>由十六个数字0、1、2、3、4、5、6、7、8、9、A、B、C、D、E、F组成</p>
+<p>逢16进1</p>
+<h5 id="栗子">栗子</h5>
+<p>2进制栗子，逢2进1</p>
+<p>0，1，10，11，100，101，110，111，...,</p>
+<h3 id="科学计数法">科学计数法</h3>
+<p>这是一种计数的方法，通过E表示指数，上学的时候学到的是十进制计数法，即E表示10的指数</p>
+<p>1.234555E5 = 123455.5</p>
+<p>0.667788E-3 = 667.788  (E-3表示10的-3次方)</p>
+<h3 id="浮点型的存储机制">浮点型的存储机制</h3>
+<p>浮点型数据类型主要有：单精度float、双精度double</p>
+<h5 id="单精度浮点数float">单精度浮点数（float）</h5>
+<p>在内存中占4个字节、有效数字8位、表示范围：-3.40E+38 ~ +3.40E+38</p>
+<h5 id="双精度浮点数double">双精度浮点数（double）</h5>
+<p>在内存中占8个字节、有效数字16位、表示范围：-1.79E+308 ~ +1.79E+308</p>
+<h5 id="浮点型常量">浮点型常量</h5>
+<ol>
+<li>十进制数形式：由数字和小数点组成，且必须有小数点，如0.123 或 123.0</li>
+<li>科学计数法形式：123e3 或 123E3，其中e 或 E之前必须有数字，且e或E后面的指数必须为整数。</li>
+</ol>
+<h5 id="浮点型">浮点型</h5>
+<p>浮点型简单来说就是表示带有小数的数据，而恰恰小数点可以在相应的二进制的不同位置浮动，可能是这样就被定义成浮点型了</p>
+<h3 id="javascript存储数字方式">JavaScript存储数字方式</h3>
+<p>JavaScript 存储小数和其它语言如 Java 和 Python 都不同，<strong>JavaScript中所有数字包括整数和小数都只有一种类型 即 Number类型</strong> 它的实现遵循 IEEE 754 标准</p>
+<p><strong><mark>javascript以64位双精度浮点数存储所有Number类型值</mark> 即计算机最多存储64位二进制数。</strong></p>
+<p>这样的存储结构优点是可以归一化处理整数和小数，节省存储空间</p>
+<p>对于一个整数来说，进行十进制与二进制之间的转换很方便，但对于浮点数来说不方便——<strong>因为小数点的存在</strong>。对于浮点数来说，小数点的位置不是固定的（小数点前后数字个数都不固定）。后来大神们想出用科学计数法的方式（1.01 * 2E4）来表示浮点数，这样的好处是：<strong>小数点位置固定下来了</strong></p>
+<p>因计算机只能用0、1表示，二进制科学计数法公式如下：</p>
+<pre><code class="language-math">X = å * 2^e
+
+（å为浮点数的二进制表示，数字0、1；e为小数点的位数）
+</code></pre>
+<h5 id="栗子-2">栗子</h5>
+<p>如整数27.0转换成二进制数为11011.0，用上面公式表示为：</p>
+<pre><code class="language-math">11011.0 = 1.10110*2^4
+</code></pre>
+<p>大家思考一下如何存储上面的二进制数呢？</p>
+<p>如下图</p>
+<!-- more -->
+<p><img src="https://wendy-banzhuanke.github.io//post-images/1655696787376.jpg" alt="" loading="lazy"><br>
+对于double型数据（双精度浮点数），其占用8个字节（大小），右边52位用来表示小数点后面的数字（尾数），中间11位用来表示e(exponent)小数点移动的位数（阶码），左边第一位用来表示正负。</p>
+<p>0.1 &gt;&gt;&gt; 0.0001 1001 1001 1001...（1001无限循环）<br>
+0.2 &gt;&gt;&gt; 0.0011 0011 0011 0011...（0011无限循环）</p>
+<p>就像一些无理数不能有限表示，如 圆周率 3.1415926...，1.3333... 等，在转换为二进制的科学记数法的形式时只保留64位有效的数字，此时只能模仿十进制进行四舍五入了，但是二进制只有 0 和 1 两个，于是变为 0 舍 1 入。在这一步出现了错误，那么一步错步步错，那么在计算机存储小数时也就理所应当的出现了误差。这即是计算机中部分浮点数运算时出现误差，这就是丢失精度的根本原因</p>
+<h3 id="总结">总结</h3>
+<p>计算机存储双精度浮点数需要先把十进制数转换为二进制的科学记数法的形式，然后计算机以自己的规则{符号位+(指数位+指数偏移量的二进制)+小数部分}存储二进制的科学记数法,因为存储时有位数限制（64位），并且某些十进制的浮点数在转换为二进制数时会出现无限循环，会造成二进制的舍入操作(0舍1入)，当再转换为十进制时就造成了计算误差。</p>
+<h3 id="参考">参考</h3>
+<p>https://zhuanlan.zhihu.com/p/100353781</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E5%BC%95%E5%AF%BC">引导</a></li>
+<li><a href="#%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2">进制转换</a><br>
+*
+<ul>
+<li><a href="#%E4%BA%8C%E8%BF%9B%E5%88%B6">二进制</a></li>
+<li><a href="#%E5%85%AB%E8%BF%9B%E5%88%B6">八进制</a></li>
+<li><a href="#%E5%8D%81%E8%BF%9B%E5%88%B6">十进制</a></li>
+<li><a href="#%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6">十六进制</a></li>
+<li><a href="#%E6%A0%97%E5%AD%90">栗子</a></li>
+</ul>
+</li>
+<li><a href="#%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95">科学计数法</a></li>
+<li><a href="#%E6%B5%AE%E7%82%B9%E5%9E%8B%E7%9A%84%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6">浮点型的存储机制</a><br>
+*
+<ul>
+<li><a href="#%E5%8D%95%E7%B2%BE%E5%BA%A6%E6%B5%AE%E7%82%B9%E6%95%B0float">单精度浮点数（float）</a></li>
+<li><a href="#%E5%8F%8C%E7%B2%BE%E5%BA%A6%E6%B5%AE%E7%82%B9%E6%95%B0double">双精度浮点数（double）</a></li>
+<li><a href="#%E6%B5%AE%E7%82%B9%E5%9E%8B%E5%B8%B8%E9%87%8F">浮点型常量</a></li>
+<li><a href="#%E6%B5%AE%E7%82%B9%E5%9E%8B">浮点型</a></li>
+</ul>
+</li>
+<li><a href="#javascript%E5%AD%98%E5%82%A8%E6%95%B0%E5%AD%97%E6%96%B9%E5%BC%8F">JavaScript存储数字方式</a><br>
+*
+<ul>
+<li><a href="#%E6%A0%97%E5%AD%90-2">栗子</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://wendy-banzhuanke.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

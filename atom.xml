@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://wendy-banzhuanke.github.io/</id>
+    <title>Wendy</title>
+    <updated>2022-06-20T06:22:37.730Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://wendy-banzhuanke.github.io/"/>
+    <link rel="self" href="https://wendy-banzhuanke.github.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://wendy-banzhuanke.github.io/images/avatar.png</logo>
+    <icon>https://wendy-banzhuanke.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2022, Wendy</rights>
+    <entry>
+        <title type="html"><![CDATA[Javascript之枚举]]></title>
+        <id>https://wendy-banzhuanke.github.io/post/javascript-zhi-mei-ju/</id>
+        <link href="https://wendy-banzhuanke.github.io/post/javascript-zhi-mei-ju/">
+        </link>
+        <updated>2022-06-08T03:56:33.000Z</updated>
+        <content type="html"><![CDATA[<p>Javascript之枚举</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CSS的组件化VS原子化]]></title>
+        <id>https://wendy-banzhuanke.github.io/post/css-de-zu-jian-hua-vs-yuan-zi-hua/</id>
+        <link href="https://wendy-banzhuanke.github.io/post/css-de-zu-jian-hua-vs-yuan-zi-hua/">
+        </link>
+        <updated>2019-10-17T05:45:17.000Z</updated>
+        <summary type="html"><![CDATA[<p>大多数时候，CSS 就像 HTML 的一面镜子一样，嵌套的 CSS 选择器完美地映射了 HTML 结构。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>大多数时候，CSS 就像 HTML 的一面镜子一样，嵌套的 CSS 选择器完美地映射了 HTML 结构。</p>
+<!-- more -->
+<h2 id="一组织和管理css">一.组织和管理CSS</h2>
+<h3 id="目录">目录</h3>
+<h4 id="1-bem">1. BEM</h4>
+<ul>
+<li>BEM介绍</li>
+<li>命名规范</li>
+<li>BEM使用场景</li>
+</ul>
+<h4 id="2-acss">2. ACSS</h4>
+<ul>
+<li>引入</li>
+<li>原子化</li>
+<li>相较于BEM的优势</li>
+<li>优缺点</li>
+</ul>
+<h3 id="说明">说明</h3>
+<h4 id="1-bem-2">1. BEM</h4>
+<p><strong>BEM 是什么</strong>？</p>
+<p><a href="https://www.bemcss.com/">BEM</a> 其实就是块（block）、元素（element）、修饰符（modifier）的缩写。是由Yandex团队提出的一种前端命名方法论。利用不同的区块、功能以及样式给元素命名。</p>
+<p><strong>命名规范</strong></p>
+<p><img src="https://wendy-banzhuanke.github.io//post-images/1655704114163.png" alt="" loading="lazy"></br><br>
+.block {} // 代表了更高级别的抽象或组件</br><br>
+.block__element {} // 代表 block 的后代，用于形成一个完整的 block 的整体</br><br>
+.block--modifier {} // 代表 block 的不同状态或不同版本</p>
+<p>BEM的命名规范很容易记：block-name__element-name--modifier-name，也就是模块名 + 元素名 + 修饰器名。</p>
+<blockquote>
+<p>BEM 使用这种命名规范使代码更加易读，让代码更加严密，从而有助于协作、控制和维护。</p>
+</blockquote>
+<p>BEM命名方法：</p>
+<pre><code class="language-html">&lt;div class=&quot;student&quot;&gt;
+  &lt;div class=&quot;student__content&quot;&gt;
+    &lt;button class=&quot;student__content--primary&quot;&gt;&lt;/button&gt;
+    &lt;button class=&quot;student__content--success&quot;&gt;&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+<pre><code class="language-css">.student {}
+.student__content{}
+.student__content--primary{}
+.student__content--success{}
+</code></pre>
+<p>一般的CSS命名：</p>
+<pre><code class="language-html">&lt;div class=&quot;student&quot;&gt;
+  &lt;div class=&quot;content&quot;&gt;
+    &lt;button class=&quot;button-primary&quot;&gt;&lt;/button&gt;
+    &lt;button class=&quot;button-success&quot;&gt;&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">.student{}
+.content{}
+.button-primary{}
+.button-success{}
+</code></pre>
+<blockquote>
+<p>大多数时候，CSS 就像 HTML 的一面镜子一样，嵌套的 CSS 选择器完美地映射了 HTML 结构。</p>
+</blockquote>
+<p><strong>BEM使用场景</strong></p>
+<ul>
+<li>有比较明确的层级关系和组件关联的时候，需要使用 BEM</li>
+<li>单条公共样式，不需要使用 BEM	.theme-red {color: red;}</li>
+<li>header中的logo，其作用域是全局上下文 而非局部上下文，不需要使用BEM；一个元素的范围可能开始于任何上下文，因此要确定只在需要用到BEM的地方才使用它</li>
+<li>预处理语言 + BEM</li>
+<li>前端框架 + BEM</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://wendy-banzhuanke.github.io//post-images/1655704526102.png" alt="" loading="lazy"></figure>
+<h4 id="2-acss-2">2. ACSS</h4>
+<p>将样式原子化的思维方式，最早来自雅虎团队的 <a href="https://acss.io/">atomic css </a>（简称 ACSS ）。相较于上面介绍的BEM，ACSS 没有很严格的格式规范，但是它们解决的问题是一样的，都是希望 CSS 在大型项目下能够拥有更好的重用性与维护性，只是采用的方法与方向不同而已</p>
+<ul>
+<li><strong>引入</strong></li>
+</ul>
+<p>一件物品的属性可能是多种多样的，比如一件衬衫：颜色、尺寸、材料、花纹、品牌...我们同样可以将一个页面元素想象成一件衬衫，我们暂定一个完整的衬衫定义如下：</p>
+<p>品牌 + 尺寸 + 颜色 + 花纹 + 季节 + 材料 + 样式</p>
+<p>比如我要拿一件 李宁 L 码 黑色 带Logo 夏季 速干 短袖 衬衫，那么名字是不是写起来特别长？</p>
+<p>但是我有时候又不需要所有的标签都需要带上，我可能只需要一件 XL码 白色 长袖 衬衫，然后我想给家人买一件 L 码 红色 纯棉 衬衫</p>
+<p>这样不太好写一个可复用的 CSS 衬衫样式。</p>
+<ul>
+<li><strong>原子化</strong></li>
+</ul>
+<p>我们不要思考通过命名管理 CSS，而是将精力放在管理 CSS 的各种属性上，也就是构成我们衬衫的原子上，会不会更好呢？</p>
+<p>比如我要一件衬衫，什么样子的我不清楚，当需求逐渐清晰的时候，再添加上各种属性：冷了就添加长袖，想舒服点就添加纯棉，骚了就添加夏威夷风，岂不美哉？</p>
+<p>伪代码如下：</p>
+<pre><code class="language-html">&lt;div class=&quot;XL码 白色 衬衫 长袖 纯棉 夏威夷风&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>ACSS 的原则是把 CSS 样式打散 不可再分的最小单位，每个 CSS 类只对应一条样式规则，从而达到最大化的可复用性。一个类只做一件事。yahoo 利用这种方案减轻了很多代码。</p>
+<ul>
+<li>
+<p><strong>相较于BEM的优势</strong></p>
+<ul>
+<li>「BEM代码量过大」。可能会根据不同的组件设置不同的命名空间，很容易使得 CSS 层数过多，越是复杂的页面效果，层级越是容易多</li>
+<li>「命名」。计算机科学中最难的两件事之一就是命名，而 Atomic CSS 直接舍弃了命名</li>
+<li>「团队协作时的代码冗余」。几个团队协作的时候，更容易引发问题：</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-css">block1__text_highlight {color: yellow;} ​ 
+... ​ 
+block2__text_bright {color: yellow;}
+
+</code></pre>
+<p>显然，这种命名还不是拆分的最小单位，而 ACSS 是不可以拆分并且容易固化的，所以管理的难度会小很多，甚至随着需求的清晰，可以做到代码量的只增不减，并且复用率极高。</p>
+<ul>
+<li>
+<p><strong>优缺点</strong></br></p>
+<p><strong>列举一下优点</strong></p>
+<ul>
+<li>可复用性很强，将 class name 定义最小化，让全站都可复用</li>
+<li>可组合性很强，这样任何页面都可以通过原子类的有机组合去实现</li>
+<li>通过 atomic css 的打包，只会产生用到的样式</li>
+<li>比起 inline 的方式更加简单</li>
+<li>很好压缩，整体 size 小一点</li>
+</ul>
+<p><strong>当然也有缺点</strong></p>
+<ul>
+<li>写起来丑</li>
+<li>没有语义化</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>总的来说，acss是很值得你去尝试一种方式，熟练了之后会极大提高你的编码效率</p>
+</blockquote>
+<h2 id="二样式方案的四种粒度">二.样式方案的四种粒度</h2>
+<p><strong>1. 第一种</strong></br></p>
+<pre><code class="language-html">&lt;div style=&quot;{ borderRadius: '0.5rem', padding: '1rem' }&quot;&gt; Click &lt;/div&gt;
+</code></pre>
+<p>行内样式，众所周知，不利于复用, 选择什么值没有任何限制, 不利于规范约束（如：font-size:13px/14px）。</p>
+<p><strong>2. 第二种</strong></br></p>
+<pre><code class="language-html">&lt;div class=&quot;rounded-lg p-4 mr-2&quot;&gt; Click &lt;/div&gt;
+</code></pre>
+<p>原子化css, 将 class name 定义最小化，让全站都可复用, 体积小等， 优点很多，这两年很火的原子化CSS框架tailwindcss 还有高仿的windicss</p>
+<pre><code class="language-css">.rounded-lg {
+  border-radius:6px;
+}
+.p-4 {
+  padding: 4px;
+}
+.mr-2 {
+  margin-right:2px
+}
+.bg-blue-500 {
+  background: #39be49;
+}
+</code></pre>
+<p><strong>3. 第三种</strong></br></p>
+<pre><code class="language-html">&lt;div class=&quot;button button--primary&quot;&gt; Click &lt;/div&gt;
+</code></pre>
+<p>这是css组件化的一种最普通的表现方式，组件化开发的一个优势，能够更快定位需要的地方。如下代码：</p>
+<pre><code class="language-css">.button {
+   display: inline-block;
+   line-height: 1;
+   min-height: 40px;
+   white-space: nowrap;
+   cursor: pointer;
+   background: #fff;
+   border: 1px solid #dcdfe6;
+   color: #606266;
+   text-align: center;
+   box-sizing: border-box;
+   outline: none;
+   margin: 0;
+   transition: .1s;
+   font-weight: 500;
+   padding: 12px 20px;
+   font-size: 14px;
+   border-radius: 4px;
+}
+.button--primary {
+    color: #409eff;
+    background: #ecf5ff;
+    border-color: #b3d8ff;
+}
+</code></pre>
+<blockquote>
+<p>一个组件做的事情越多，或者一个组件越具体，就越难复用</br><br>
+在 CSS 中采用组件优先的方法意味着你要为一些东西创建组件，即使它们永远不会被重复使用。这种过早的抽象是导致样式表臃肿和复杂的根源。</p>
+</blockquote>
+<p><strong>4. 第四种</strong></br></p>
+<pre><code class="language-html">&lt;Button&gt; Click &lt;/Button&gt;
+</code></pre>
+<p>这也是强组件化css的一种方案，CSS-in-JS在React社区的热度是最高的，</p>
+<p><mark>这四种方式越往下走，颗粒度越来越大，约束性变高，自由性不足。而 TailwindCSS 位于第二层，CSS in JS位于第四层。</mark></p>
+<h2 id="三当前社区较火的框架">三.当前社区较火的框架</h2>
+<h3 id="tailwind-css">Tailwind CSS</h3>
+<h4 id="目录-2">目录</h4>
+<ul>
+<li>介绍</li>
+<li>demo「演示本地项目，本地代码」</li>
+<li>Tailwind JIT(V3.0)</li>
+</ul>
+<h4 id="说明-2">说明</h4>
+<h5 id="1-介绍">1. 介绍</h5>
+<p><a href="https://www.tailwindcss.cn/">tailwindcss</a>是一个Utility first的CSS框架，与以往我们重语义化的思想相悖，它的作者<a href="https://adamwathan.me/">Adam Wathan</a>是《Refactoring UI》这本书的作者</p>
+<h5 id="2-demo">2. demo</h5>
+<p>参考本地代码</p>
+<h5 id="3-tailwind-jitv30">3. Tailwind JIT(V3.0)</h5>
+<p>Tailwind CSS 作者 Adam Wathan 宣布了一个新项目：用于 Tailwind CSS 的 JIT 编译器 tailwindcss-jit，目前处于实验性阶段。</p>
+<p>据介绍，tailwindcss-jit 会在开发者编写模板文件时按需编译所有 CSS，而不是预先生成整个样式表。</p>
+<p>Tailwind CSS 作者提到了创建此项目的初衷，他表示这些年来在改进 Tailwind CSS 时，所处理的最困难的限制之一就是开发过程中生成的文件大小。只要对配置文件的定制足够深，生成的 CSS 大小会达到 10MB 或更多。而如此多的 CSS 又是构建工具或者浏览器所要求的。于是他便创建了此项目。</p>
+<p>Tailwind CSS 作者还介绍了 tailwindcss-jit 的部分优点：</p>
+<ul>
+<li>构建速度极快</li>
+<li>开箱即用地启用所有变体</li>
+<li>无需编写自定义 CSS 即可生成任意样式</li>
+<li>CSS 在开发和生产环境中保持一致</li>
+<li>开发阶段提供更好的浏览器性能</li>
+</ul>
+<h3 id="css-in-js">CSS in JS</h3>
+<p>一般软件开发都遵循关注点分离原则，css in js是关注点混合</p>
+<h4 id="目录-3">目录</h4>
+<ul>
+<li>介绍</li>
+<li>demo「演示本地项目，本地代码」</li>
+</ul>
+<h2 id="四结束">四.结束</h2>
+<p>一般来说 组件化规范更适合基础组件库，关注点分离原则；<br>
+原子化规范更适合业务布局开发，效率高，复用性高；</p>
+<h3 id="推荐博文">推荐博文</h3>
+<ol>
+<li>https://adamwathan.me/css-utility-classes-and-separation-of-concerns/ (css功能类和关注点分离)</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript精度丢失解析]]></title>
+        <id>https://wendy-banzhuanke.github.io/post/javascript-jing-du-diu-shi-jie-xi/</id>
+        <link href="https://wendy-banzhuanke.github.io/post/javascript-jing-du-diu-shi-jie-xi/">
+        </link>
+        <updated>2018-06-20T03:43:27.000Z</updated>
+        <summary type="html"><![CDATA[<p>对于一个整数来说，进行十进制与二进制之间的转换很方便，但对于浮点数来说不方便——<strong>因为小数点的存在</strong>。对于浮点数来说，小数点的位置不是固定的（小数点前后数字个数都不固定）。后来大神们想出用科学计数法的方式（1.01 * 2E4）来表示浮点数，这样的好处是：<strong>小数点位置固定下来了</strong></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>对于一个整数来说，进行十进制与二进制之间的转换很方便，但对于浮点数来说不方便——<strong>因为小数点的存在</strong>。对于浮点数来说，小数点的位置不是固定的（小数点前后数字个数都不固定）。后来大神们想出用科学计数法的方式（1.01 * 2E4）来表示浮点数，这样的好处是：<strong>小数点位置固定下来了</strong></p>
+<!-- more -->
+<h3 id="前言">前言</h3>
+<p>看这篇文章之前，你需要了解一下的知识</p>
+<ul>
+<li>进制之间的转换</li>
+<li>科学计数法中的E</li>
+<li>浮点型的存储机制（单精度浮点数，双精度浮点数）</li>
+</ul>
+<h3 id="引导">引导</h3>
+<p>大家都学过数学「无理数」的概念，即无限循环小数，比如常见的π（3.1415926...），再比如1÷3=1.33333...；</p>
+<p>计算机没有办法存储一个无限循环小数，只能存储它的近似值；</p>
+<p>计算机在计算时是将十进制转成二进制后进行计算并存储；</p>
+<h3 id="进制转换">进制转换</h3>
+<p>以下为常用的进制转换，n进制 逢n进一</p>
+<h5 id="二进制">二进制</h5>
+<p>由两个数字 0、1组成</p>
+<p>逢2进1</p>
+<h5 id="八进制">八进制</h5>
+<p>由八个数字 0、1、2、3、4、5、6、7组成</p>
+<p>逢8进1</p>
+<h5 id="十进制">十进制</h5>
+<blockquote>
+<p>日常中常用</p>
+</blockquote>
+<p>由十个数字0、1、2、3、4、5、6、7、8、9组成</p>
+<p>逢10进1</p>
+<h5 id="十六进制">十六进制</h5>
+<blockquote>
+<p>半斤八两的由来</p>
+</blockquote>
+<p>由十六个数字0、1、2、3、4、5、6、7、8、9、A、B、C、D、E、F组成</p>
+<p>逢16进1</p>
+<h5 id="栗子">栗子</h5>
+<p>2进制栗子，逢2进1</p>
+<p>0，1，10，11，100，101，110，111，...,</p>
+<h3 id="科学计数法">科学计数法</h3>
+<p>这是一种计数的方法，通过E表示指数，上学的时候学到的是十进制计数法，即E表示10的指数</p>
+<p>1.234555E5 = 123455.5</p>
+<p>0.667788E-3 = 667.788  (E-3表示10的-3次方)</p>
+<h3 id="浮点型的存储机制">浮点型的存储机制</h3>
+<p>浮点型数据类型主要有：单精度float、双精度double</p>
+<h5 id="单精度浮点数float">单精度浮点数（float）</h5>
+<p>在内存中占4个字节、有效数字8位、表示范围：-3.40E+38 ~ +3.40E+38</p>
+<h5 id="双精度浮点数double">双精度浮点数（double）</h5>
+<p>在内存中占8个字节、有效数字16位、表示范围：-1.79E+308 ~ +1.79E+308</p>
+<h5 id="浮点型常量">浮点型常量</h5>
+<ol>
+<li>十进制数形式：由数字和小数点组成，且必须有小数点，如0.123 或 123.0</li>
+<li>科学计数法形式：123e3 或 123E3，其中e 或 E之前必须有数字，且e或E后面的指数必须为整数。</li>
+</ol>
+<h5 id="浮点型">浮点型</h5>
+<p>浮点型简单来说就是表示带有小数的数据，而恰恰小数点可以在相应的二进制的不同位置浮动，可能是这样就被定义成浮点型了</p>
+<h3 id="javascript存储数字方式">JavaScript存储数字方式</h3>
+<p>JavaScript 存储小数和其它语言如 Java 和 Python 都不同，<strong>JavaScript中所有数字包括整数和小数都只有一种类型 即 Number类型</strong> 它的实现遵循 IEEE 754 标准</p>
+<p><strong><mark>javascript以64位双精度浮点数存储所有Number类型值</mark> 即计算机最多存储64位二进制数。</strong></p>
+<p>这样的存储结构优点是可以归一化处理整数和小数，节省存储空间</p>
+<p>对于一个整数来说，进行十进制与二进制之间的转换很方便，但对于浮点数来说不方便——<strong>因为小数点的存在</strong>。对于浮点数来说，小数点的位置不是固定的（小数点前后数字个数都不固定）。后来大神们想出用科学计数法的方式（1.01 * 2E4）来表示浮点数，这样的好处是：<strong>小数点位置固定下来了</strong></p>
+<p>因计算机只能用0、1表示，二进制科学计数法公式如下：</p>
+<pre><code class="language-math">X = å * 2^e
+
+（å为浮点数的二进制表示，数字0、1；e为小数点的位数）
+</code></pre>
+<h5 id="栗子-2">栗子</h5>
+<p>如整数27.0转换成二进制数为11011.0，用上面公式表示为：</p>
+<pre><code class="language-math">11011.0 = 1.10110*2^4
+</code></pre>
+<p>大家思考一下如何存储上面的二进制数呢？</p>
+<p>如下图</p>
+<!-- more -->
+<p><img src="https://wendy-banzhuanke.github.io//post-images/1655696787376.jpg" alt="" loading="lazy"><br>
+对于double型数据（双精度浮点数），其占用8个字节（大小），右边52位用来表示小数点后面的数字（尾数），中间11位用来表示e(exponent)小数点移动的位数（阶码），左边第一位用来表示正负。</p>
+<p>0.1 &gt;&gt;&gt; 0.0001 1001 1001 1001...（1001无限循环）<br>
+0.2 &gt;&gt;&gt; 0.0011 0011 0011 0011...（0011无限循环）</p>
+<p>就像一些无理数不能有限表示，如 圆周率 3.1415926...，1.3333... 等，在转换为二进制的科学记数法的形式时只保留64位有效的数字，此时只能模仿十进制进行四舍五入了，但是二进制只有 0 和 1 两个，于是变为 0 舍 1 入。在这一步出现了错误，那么一步错步步错，那么在计算机存储小数时也就理所应当的出现了误差。这即是计算机中部分浮点数运算时出现误差，这就是丢失精度的根本原因</p>
+<h3 id="总结">总结</h3>
+<p>计算机存储双精度浮点数需要先把十进制数转换为二进制的科学记数法的形式，然后计算机以自己的规则{符号位+(指数位+指数偏移量的二进制)+小数部分}存储二进制的科学记数法,因为存储时有位数限制（64位），并且某些十进制的浮点数在转换为二进制数时会出现无限循环，会造成二进制的舍入操作(0舍1入)，当再转换为十进制时就造成了计算误差。</p>
+<h3 id="参考">参考</h3>
+<p>https://zhuanlan.zhihu.com/p/100353781</p>
+]]></content>
+    </entry>
+</feed>
